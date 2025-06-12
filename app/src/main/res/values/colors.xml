@@ -29,6 +29,12 @@
     <color name="error">#EF4444</color>
     <color name="info">#3B82F6</color>
 
+    <!-- Severity Colors -->
+    <color name="severity_low">#4CAF50</color>      <!-- Green -->
+    <color name="severity_medium">#FF9800</color>   <!-- Orange -->
+    <color name="severity_high">#F44336</color>     <!-- Red -->
+    <color name="severity_critical">#9C27B0</color> <!-- Purple -->
+
     <!-- Legacy Colors (keeping for compatibility) -->
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>

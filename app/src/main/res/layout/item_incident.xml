@@ -1,44 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/EstateGuard.Card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="4dp"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="2dp">
+    android:layout_margin="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="12dp">
+        android:orientation="horizontal"
+        android:padding="16dp">
 
-        <TextView
-            android:id="@+id/text_incident_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Incident description"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:textColor="?attr/colorOnSurface" />
+        <!-- Severity Indicator -->
+        <View
+            android:id="@+id/severity_indicator"
+            android:layout_width="4dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="12dp"
+            android:background="@color/severity_low" />
 
-        <TextView
-            android:id="@+id/text_incident_timestamp"
-            android:layout_width="match_parent"
+        <!-- Content -->
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="Timestamp"
-            android:textSize="12sp"
-            android:textColor="?attr/colorOnSurface" />
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/text_incident_location"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:text="Location"
-            android:textSize="12sp"
-            android:textColor="?attr/colorOnSurface" />
+            <TextView
+                android:id="@+id/text_incident_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Incident description"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="?attr/colorOnSurface"
+                tools:text="Security breach at main gate" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/text_incident_timestamp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Timestamp"
+                    android:textSize="12sp"
+                    android:textColor="?attr/colorOnSurface"
+                    tools:text="Dec 15, 2024 14:30" />
+
+                <TextView
+                    android:id="@+id/text_incident_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/status_background"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="2dp"
+                    android:text="REPORTED"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary_light"
+                    tools:text="REPORTED" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/text_incident_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Location"
+                android:textSize="12sp"
+                android:textColor="?attr/colorOnSurface"
+                android:drawableStart="@drawable/ic_location"
+                android:drawablePadding="4dp"
+                android:gravity="center_vertical"
+                tools:text="Main Gate Area" />
+
+        </LinearLayout>
+
+        <!-- Photo Thumbnail -->
+        <ImageView
+            android:id="@+id/image_incident_photo"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="12dp"
+            android:background="@drawable/photo_background"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            tools:src="@drawable/ic_incident"
+            tools:visibility="visible" />
 
     </LinearLayout>
 

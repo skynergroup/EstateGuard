@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     kotlin("kapt")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -71,6 +72,10 @@ dependencies {
     // Room database for local storage
     implementation("androidx.room:room-runtime:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
+    implementation(libs.firebase.auth)
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
+    implementation(libs.googleid)
     kapt("androidx.room:room-compiler:2.6.1")
 
     // Permissions handling
@@ -78,6 +83,13 @@ dependencies {
 
     // Image loading
     implementation("com.github.bumptech.glide:glide:4.16.0")
+
+    // Firebase
+    implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
+    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.firebase:firebase-firestore-ktx")
+    implementation("com.google.firebase:firebase-storage-ktx")
+    implementation("com.google.firebase:firebase-analytics-ktx")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

@@ -1,35 +1,19 @@
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="108dp"
-    android:height="108dp"
-    android:viewportWidth="108"
-    android:viewportHeight="108">
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Background circle with EstateGuard colors -->
-    <path
-        android:fillColor="@color/primary_dark"
-        android:pathData="M54,54m-50,0a50,50 0,1 1,100 0a50,50 0,1 1,-100 0" />
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="@color/primary_dark" />
+            <size android:width="108dp" android:height="108dp" />
+        </shape>
+    </item>
 
-    <!-- Shield shape for security theme -->
-    <path
-        android:fillColor="@color/primary_light"
-        android:pathData="M54,20L40,28v16c0,8.8 6,17 14,19c8,-2 14,-10.2 14,-19V28L54,20z" />
+    <!-- EstateGuard Logo -->
+    <item android:gravity="center">
+        <bitmap
+            android:src="@drawable/ic_estateguard_logo"
+            android:gravity="center" />
+    </item>
 
-    <!-- Inner shield detail -->
-    <path
-        android:fillColor="@color/primary_dark"
-        android:pathData="M54,25L44,31v12c0,6.6 4.5,12.8 10,14.3c5.5,-1.5 10,-7.7 10,-14.3V31L54,25z" />
-
-    <!-- Security checkmark -->
-    <path
-        android:fillColor="@color/primary_light"
-        android:pathData="M49,38l3,3l7,-7l-2,-2l-5,5l-1,-1z"
-        android:strokeWidth="1" />
-
-    <!-- Text "EG" for EstateGuard -->
-    <path
-        android:fillColor="@color/primary_light"
-        android:pathData="M45,70h4v2h-4v4h6v2h-8V66h8v2h-6V70z" />
-    <path
-        android:fillColor="@color/primary_light"
-        android:pathData="M57,78h6c2,0 4,-1 4,-3s-1,-2 -2,-2c1,0 2,-1 2,-2c0,-2 -2,-3 -4,-3h-6V78zM59,70h4c1,0 2,0 2,1s-1,1 -2,1h-4V70zM59,74h4c1,0 2,0 2,1s-1,1 -2,1h-4V74z" />
-</vector>
+</layer-list>

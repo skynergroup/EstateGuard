@@ -44,6 +44,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".ui.qr.QRScannerActivity"
+            android:exported="false"
+            android:label="QR Scanner"
+            android:theme="@style/Theme.EstateGuard.NoActionBar"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.camera.CameraCaptureActivity"
+            android:exported="false"
+            android:label="Camera Capture"
+            android:theme="@style/Theme.EstateGuard.NoActionBar"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
