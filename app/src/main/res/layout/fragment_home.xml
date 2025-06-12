@@ -27,7 +27,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="20dp">
+                android:padding="20dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginBottom="16dp"
+                    android:contentDescription="EstateGuard Logo"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/ic_estateguard_logo" />
 
                 <TextView
                     android:id="@+id/text_welcome"
