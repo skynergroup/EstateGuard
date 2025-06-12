@@ -22,13 +22,13 @@ class AuthManager(context: Context) {
             User(
                 id = "admin_001",
                 email = "admin@estateguard.com",
-                name = "Admin User",
+                name = "John Smith",
                 role = UserRole.ADMIN
             ),
             User(
                 id = "guard_001",
                 email = "guard@estateguard.com",
-                name = "Security Guard",
+                name = "Michael Johnson",
                 role = UserRole.SECURITY_GUARD
             )
         )
@@ -84,6 +84,30 @@ class AuthManager(context: Context) {
     
     fun getCurrentUserId(): String? {
         return prefs.getString(KEY_USER_ID, null)
+    }
+
+    // Method for testing - simulate login with mock users
+    fun simulateLogin(userType: String = "guard"): AuthResult {
+        val user = if (userType == "admin") {
+            MOCK_USERS.find { it.role == UserRole.ADMIN }
+        } else {
+            MOCK_USERS.find { it.role == UserRole.SECURITY_GUARD }
+        }
+
+        return if (user != null) {
+            // Save user session
+            prefs.edit().apply {
+                putString(KEY_USER_ID, user.id)
+                putString(KEY_USER_EMAIL, user.email)
+                putString(KEY_USER_NAME, user.name)
+                putString(KEY_USER_ROLE, user.role.name)
+                putBoolean(KEY_IS_LOGGED_IN, true)
+                apply()
+            }
+            AuthResult.Success(user)
+        } else {
+            AuthResult.Error("User not found")
+        }
     }
 }
 

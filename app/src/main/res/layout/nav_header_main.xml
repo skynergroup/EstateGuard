@@ -13,10 +13,10 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/nav_header_logo"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:contentDescription="@string/nav_header_desc"
+        android:contentDescription="EstateGuard Logo"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:scaleType="centerInside"
         app:srcCompat="@drawable/ic_estateguard_logo" />
