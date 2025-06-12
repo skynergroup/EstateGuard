@@ -29,6 +29,9 @@
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="@dimen/fab_margin"
         android:layout_marginBottom="16dp"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        android:contentDescription="@string/incident_new"
+        app:srcCompat="@drawable/ic_incident"
+        app:backgroundTint="@color/primary_light"
+        app:tint="@color/primary_dark" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

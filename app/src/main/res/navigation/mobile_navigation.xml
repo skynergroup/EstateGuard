@@ -12,14 +12,26 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="za.co.skyner.estateguard.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_clock_in_out"
+        android:name="za.co.skyner.estateguard.ui.clockinout.ClockInOutFragment"
+        android:label="@string/menu_clock_in_out"
+        tools:layout="@layout/fragment_clock_in_out" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="za.co.skyner.estateguard.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_incident_log"
+        android:name="za.co.skyner.estateguard.ui.incident.IncidentLogFragment"
+        android:label="@string/menu_incident_log"
+        tools:layout="@layout/fragment_incident_log" />
+
+    <fragment
+        android:id="@+id/nav_admin"
+        android:name="za.co.skyner.estateguard.ui.admin.AdminFragment"
+        android:label="@string/menu_admin"
+        tools:layout="@layout/fragment_admin" />
+
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="za.co.skyner.estateguard.ui.profile.ProfileFragment"
+        android:label="@string/menu_profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>

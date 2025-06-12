@@ -4,17 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import za.co.skyner.estateguard.R
 import za.co.skyner.estateguard.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -28,10 +26,32 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        // Observe ViewModel data
+        homeViewModel.welcomeText.observe(viewLifecycleOwner) {
+            binding.textWelcome.text = it
         }
+
+        homeViewModel.currentStatus.observe(viewLifecycleOwner) {
+            binding.textCurrentStatus.text = it
+        }
+
+        homeViewModel.lastActivity.observe(viewLifecycleOwner) {
+            binding.textLastActivity.text = it
+        }
+
+        homeViewModel.incidentCount.observe(viewLifecycleOwner) {
+            binding.textIncidentCount.text = it
+        }
+
+        // Set up click listeners for quick actions
+        binding.buttonQuickClockIn.setOnClickListener {
+            findNavController().navigate(R.id.nav_clock_in_out)
+        }
+
+        binding.buttonQuickIncident.setOnClickListener {
+            findNavController().navigate(R.id.nav_incident_log)
+        }
+
         return root
     }
 
