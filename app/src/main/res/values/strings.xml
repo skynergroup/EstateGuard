@@ -15,6 +15,17 @@
     <string name="menu_admin">Admin Panel</string>
     <string name="menu_profile">Profile</string>
 
+    <!-- Navigation Menu Sections -->
+    <string name="menu_section_administration">Administration</string>
+    <string name="menu_section_account">Account</string>
+
+    <!-- Admin Panel -->
+    <string name="admin_title">Admin Dashboard</string>
+    <string name="admin_user_management">User Management</string>
+    <string name="admin_reports">Reports &amp; Analytics</string>
+    <string name="admin_export_data">Export Data</string>
+    <string name="admin_settings">System Settings</string>
+
     <!-- Dashboard -->
     <string name="dashboard_welcome">Welcome to EstateGuard</string>
     <string name="dashboard_current_status">Current Status</string>
@@ -42,13 +53,6 @@
     <string name="incident_location">Location</string>
     <string name="incident_submit">Submit Incident</string>
     <string name="incident_success">Incident logged successfully</string>
-
-    <!-- Admin Panel -->
-    <string name="admin_title">Admin Panel</string>
-    <string name="admin_user_management">User Management</string>
-    <string name="admin_reports">Reports</string>
-    <string name="admin_export_data">Export Data</string>
-    <string name="admin_settings">Settings</string>
 
     <!-- Common -->
     <string name="save">Save</string>

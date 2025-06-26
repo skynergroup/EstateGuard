@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
-    android:background="@drawable/side_nav_bar"
+    android:background="@color/primary_color"
     android:gravity="bottom"
     android:orientation="vertical"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -12,29 +12,56 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <ImageView
-        android:id="@+id/nav_header_logo"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:contentDescription="EstateGuard Logo"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:scaleType="centerInside"
-        app:srcCompat="@drawable/ic_estateguard_logo" />
+    <!-- Logo Container -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginBottom="16dp"
+        app:cardCornerRadius="32dp"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardElevation="4dp">
 
+        <ImageView
+            android:id="@+id/nav_header_logo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="EstateGuard Logo"
+            android:padding="12dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_dashboard"
+            app:tint="@color/primary_color" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- App Title -->
     <TextView
         android:id="@+id/nav_header_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="@string/nav_header_title"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="4dp" />
 
+    <!-- Subtitle -->
     <TextView
         android:id="@+id/nav_header_subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/nav_header_subtitle"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:textColor="@android:color/white"
+        android:alpha="0.8" />
+
+    <!-- Version Info -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="v1.0.0"
+        android:textSize="12sp"
+        android:textColor="@android:color/white"
+        android:alpha="0.6"
+        android:layout_marginTop="8dp" />
+
 </LinearLayout>

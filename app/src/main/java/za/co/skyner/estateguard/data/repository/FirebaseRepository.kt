@@ -1,7 +1,9 @@
 package za.co.skyner.estateguard.data.repository
 
 import android.net.Uri
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.FieldValue
@@ -378,6 +380,7 @@ class FirebaseRepository {
 
     // ==================== ANALYTICS OPERATIONS ====================
 
+    @RequiresApi(Build.VERSION_CODES.N)
     suspend fun getIncidentStatsByEstate(estateId: String, startDate: Long, endDate: Long): Result<Map<String, Int>> {
         return try {
             val snapshot = firestore.collection(INCIDENTS_COLLECTION)
