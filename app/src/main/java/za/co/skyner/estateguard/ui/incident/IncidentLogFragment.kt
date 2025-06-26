@@ -15,10 +15,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import za.co.skyner.estateguard.auth.FirebaseAuthManager
 import za.co.skyner.estateguard.data.model.IncidentSeverity
-import za.co.skyner.estateguard.data.repository.FirebaseRepository
+import za.co.skyner.estateguard.data.repository.EstateGuardRepository
+import za.co.skyner.estateguard.data.repository.RepositoryProvider
 import za.co.skyner.estateguard.databinding.FragmentIncidentLogBinding
 import za.co.skyner.estateguard.ui.camera.CameraCaptureActivity
+import za.co.skyner.estateguard.ui.permissions.PermissionDialogFragment
+import za.co.skyner.estateguard.utils.FragmentPermissionHelper
 import za.co.skyner.estateguard.utils.LocationManager
+import za.co.skyner.estateguard.utils.PermissionManager
 
 class IncidentLogFragment : Fragment() {
 
@@ -27,9 +31,11 @@ class IncidentLogFragment : Fragment() {
 
     private lateinit var incidentLogViewModel: IncidentLogViewModel
     private lateinit var authManager: FirebaseAuthManager
-    private lateinit var repository: FirebaseRepository
+    private lateinit var repository: EstateGuardRepository
     private lateinit var locationManager: LocationManager
     private lateinit var incidentAdapter: IncidentAdapter
+    private lateinit var permissionHelper: FragmentPermissionHelper
+    private lateinit var permissionManager: PermissionManager
 
     // Camera capture result launcher
     private val cameraCaptureLauncher = registerForActivityResult(
@@ -54,8 +60,13 @@ class IncidentLogFragment : Fragment() {
 
         // Initialize dependencies
         authManager = FirebaseAuthManager(requireContext())
-        repository = FirebaseRepository()
+        repository = RepositoryProvider.getRepository(requireContext())
         locationManager = LocationManager(requireContext())
+        permissionManager = PermissionManager(requireContext())
+        permissionHelper = FragmentPermissionHelper(this)
+
+        // Register permission launcher
+        permissionHelper.registerPermissionLauncher()
 
         // Create ViewModel with dependencies
         incidentLogViewModel = IncidentLogViewModelFactory(
@@ -125,29 +136,80 @@ class IncidentLogFragment : Fragment() {
     private fun setupClickListeners() {
         // Take photo
         binding.buttonTakePhoto.setOnClickListener {
-            val intent = Intent(requireContext(), CameraCaptureActivity::class.java)
-            cameraCaptureLauncher.launch(intent)
+            checkPermissionsAndTakePhoto()
         }
 
         // Submit incident
         binding.buttonSubmitIncident.setOnClickListener {
-            val description = binding.editTextDescription.text.toString().trim()
-            if (description.isNotEmpty()) {
-                val photoUri = incidentLogViewModel.capturedPhotoUri.value
-                incidentLogViewModel.submitIncident(
-                    description = description,
-                    severity = IncidentSeverity.LOW, // Default severity
-                    photoUri = photoUri
-                )
-            } else {
-                Toast.makeText(requireContext(), "Please provide an incident description", Toast.LENGTH_SHORT).show()
-            }
+            checkPermissionsAndSubmitIncident()
         }
 
         // Remove photo
         binding.buttonRemovePhoto.setOnClickListener {
             incidentLogViewModel.clearPhoto()
         }
+    }
+
+    private fun checkPermissionsAndTakePhoto() {
+        if (permissionManager.hasCameraPermission()) {
+            launchCamera()
+        } else {
+            requestCameraPermission { granted ->
+                if (granted) {
+                    launchCamera()
+                } else {
+                    showPermissionDeniedMessage("Camera permission is required to take photos")
+                }
+            }
+        }
+    }
+
+    private fun checkPermissionsAndSubmitIncident() {
+        val description = binding.editTextDescription.text.toString().trim()
+        if (description.isEmpty()) {
+            Toast.makeText(requireContext(), "Please provide an incident description", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (permissionManager.hasLocationPermission()) {
+            submitIncident(description)
+        } else {
+            requestLocationPermission { granted ->
+                if (granted) {
+                    submitIncident(description)
+                } else {
+                    // Submit without location
+                    Toast.makeText(requireContext(), "Submitting incident without location data", Toast.LENGTH_SHORT).show()
+                    submitIncident(description)
+                }
+            }
+        }
+    }
+
+    private fun launchCamera() {
+        val intent = Intent(requireContext(), CameraCaptureActivity::class.java)
+        cameraCaptureLauncher.launch(intent)
+    }
+
+    private fun submitIncident(description: String) {
+        val photoUri = incidentLogViewModel.capturedPhotoUri.value
+        incidentLogViewModel.submitIncident(
+            description = description,
+            severity = IncidentSeverity.LOW, // Default severity
+            photoUri = photoUri
+        )
+    }
+
+    private fun requestCameraPermission(onResult: (Boolean) -> Unit) {
+        permissionHelper.requestCameraPermission(onResult)
+    }
+
+    private fun requestLocationPermission(onResult: (Boolean) -> Unit) {
+        permissionHelper.requestLocationPermission(onResult)
+    }
+
+    private fun showPermissionDeniedMessage(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
     }
 
     private fun displayCapturedPhoto(uri: Uri) {
@@ -169,7 +231,7 @@ class IncidentLogFragment : Fragment() {
 // ViewModel Factory
 class IncidentLogViewModelFactory(
     private val authManager: FirebaseAuthManager,
-    private val repository: FirebaseRepository,
+    private val repository: EstateGuardRepository,
     private val locationManager: LocationManager
 ) : ViewModelProvider.Factory {
 

@@ -11,14 +11,14 @@ import za.co.skyner.estateguard.auth.FirebaseAuthManager
 import za.co.skyner.estateguard.data.model.Incident
 import za.co.skyner.estateguard.data.model.IncidentSeverity
 import za.co.skyner.estateguard.data.model.IncidentStatus
-import za.co.skyner.estateguard.data.repository.FirebaseRepository
+import za.co.skyner.estateguard.data.repository.EstateGuardRepository
 import za.co.skyner.estateguard.utils.LocationManager
 import za.co.skyner.estateguard.utils.LocationResult
 import java.util.*
 
 class IncidentLogViewModel(
     private val authManager: FirebaseAuthManager,
-    private val repository: FirebaseRepository,
+    private val repository: EstateGuardRepository,
     private val locationManager: LocationManager
 ) : ViewModel() {
 
@@ -38,7 +38,7 @@ class IncidentLogViewModel(
 
     // Get incidents for current user
     val incidents: LiveData<List<Incident>> = currentUser?.let { user ->
-        repository.getIncidentsForUser(user.uid).asLiveData()
+        repository.getIncidentsForUser(user.uid)
     } ?: MutableLiveData(emptyList())
 
     fun submitIncident(

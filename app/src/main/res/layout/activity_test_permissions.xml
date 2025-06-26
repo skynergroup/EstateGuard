@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/background_color">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Permission Test Activity"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/primary_color"
+        android:gravity="center"
+        android:layout_marginBottom="24dp" />
+
+    <!-- Permission Status Section -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Current Permission Status"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/text_primary"
+        android:layout_marginBottom="12dp" />
+
+    <TextView
+        android:id="@+id/text_camera_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Camera: Checking..."
+        android:textSize="16sp"
+        android:textColor="@color/text_secondary"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/text_location_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Location: Checking..."
+        android:textSize="16sp"
+        android:textColor="@color/text_secondary"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/text_all_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Overall: Checking..."
+        android:textSize="16sp"
+        android:textColor="@color/text_secondary"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/text_missing_permissions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Missing: Checking..."
+        android:textSize="14sp"
+        android:textColor="@color/error_color"
+        android:layout_marginBottom="24dp" />
+
+    <!-- Action Buttons Section -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Test Permission Requests"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/text_primary"
+        android:layout_marginBottom="12dp" />
+
+    <Button
+        android:id="@+id/button_request_camera"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Request Camera Permission"
+        android:backgroundTint="@color/primary_color"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="8dp" />
+
+    <Button
+        android:id="@+id/button_request_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Request Location Permission"
+        android:backgroundTint="@color/primary_color"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="8dp" />
+
+    <Button
+        android:id="@+id/button_request_all"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Request All Permissions"
+        android:backgroundTint="@color/accent_color"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="8dp" />
+
+    <Button
+        android:id="@+id/button_show_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Show Permission Dialog"
+        android:backgroundTint="@color/secondary_color"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="8dp" />
+
+    <Button
+        android:id="@+id/button_refresh_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Refresh Status"
+        android:backgroundTint="@android:color/darker_gray"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Instructions -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Instructions:\n• Test individual permission requests\n• Test combined permission requests\n• Test permission dialog UI\n• Check permission status updates"
+        android:textSize="14sp"
+        android:textColor="@color/text_secondary"
+        android:background="@color/card_background"
+        android:padding="12dp"
+        android:layout_marginTop="16dp" />
+
+</LinearLayout>

@@ -11,10 +11,14 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import za.co.skyner.estateguard.auth.FirebaseAuthManager
-import za.co.skyner.estateguard.data.repository.FirebaseRepository
+import za.co.skyner.estateguard.data.repository.EstateGuardRepository
+import za.co.skyner.estateguard.data.repository.RepositoryProvider
 import za.co.skyner.estateguard.databinding.FragmentClockInOutBinding
+import za.co.skyner.estateguard.ui.permissions.PermissionDialogFragment
 import za.co.skyner.estateguard.ui.qr.QRScannerActivity
+import za.co.skyner.estateguard.utils.FragmentPermissionHelper
 import za.co.skyner.estateguard.utils.LocationManager
+import za.co.skyner.estateguard.utils.PermissionManager
 
 class ClockInOutFragment : Fragment() {
 
@@ -23,8 +27,10 @@ class ClockInOutFragment : Fragment() {
 
     private lateinit var clockInOutViewModel: ClockInOutViewModel
     private lateinit var authManager: FirebaseAuthManager
-    private lateinit var repository: FirebaseRepository
+    private lateinit var repository: EstateGuardRepository
     private lateinit var locationManager: LocationManager
+    private lateinit var permissionHelper: FragmentPermissionHelper
+    private lateinit var permissionManager: PermissionManager
 
     // QR Scanner result launcher
     private val qrScannerLauncher = registerForActivityResult(
@@ -48,8 +54,13 @@ class ClockInOutFragment : Fragment() {
 
         // Initialize dependencies
         authManager = FirebaseAuthManager(requireContext())
-        repository = FirebaseRepository()
+        repository = RepositoryProvider.getRepository(requireContext())
         locationManager = LocationManager(requireContext())
+        permissionManager = PermissionManager(requireContext())
+        permissionHelper = FragmentPermissionHelper(this)
+
+        // Register permission launcher
+        permissionHelper.registerPermissionLauncher()
 
         // Create ViewModel with dependencies
         clockInOutViewModel = ClockInOutViewModelFactory(
@@ -58,6 +69,7 @@ class ClockInOutFragment : Fragment() {
 
         setupObservers()
         setupClickListeners()
+        checkInitialPermissions()
 
         return binding.root
     }
@@ -88,14 +100,78 @@ class ClockInOutFragment : Fragment() {
     private fun setupClickListeners() {
         // QR Code scanning
         binding.buttonScanQr.setOnClickListener {
-            val intent = Intent(requireContext(), QRScannerActivity::class.java)
-            qrScannerLauncher.launch(intent)
+            checkPermissionsAndScanQR()
         }
 
         // Manual clock in/out
         binding.buttonManualEntry.setOnClickListener {
-            clockInOutViewModel.manualClockInOut()
+            checkPermissionsAndManualEntry()
         }
+    }
+
+    private fun checkInitialPermissions() {
+        if (!permissionManager.hasAllRequiredPermissions()) {
+            showPermissionExplanationDialog()
+        }
+    }
+
+    private fun checkPermissionsAndScanQR() {
+        if (permissionManager.hasCameraPermission()) {
+            launchQRScanner()
+        } else {
+            requestCameraPermission { granted ->
+                if (granted) {
+                    launchQRScanner()
+                } else {
+                    showPermissionDeniedMessage("Camera permission is required to scan QR codes")
+                }
+            }
+        }
+    }
+
+    private fun checkPermissionsAndManualEntry() {
+        if (permissionManager.hasLocationPermission()) {
+            clockInOutViewModel.manualClockInOut()
+        } else {
+            requestLocationPermission { granted ->
+                if (granted) {
+                    clockInOutViewModel.manualClockInOut()
+                } else {
+                    showPermissionDeniedMessage("Location permission is required for clock in/out")
+                }
+            }
+        }
+    }
+
+    private fun launchQRScanner() {
+        val intent = Intent(requireContext(), QRScannerActivity::class.java)
+        qrScannerLauncher.launch(intent)
+    }
+
+    private fun requestCameraPermission(onResult: (Boolean) -> Unit) {
+        permissionHelper.requestCameraPermission(onResult)
+    }
+
+    private fun requestLocationPermission(onResult: (Boolean) -> Unit) {
+        permissionHelper.requestLocationPermission(onResult)
+    }
+
+    private fun showPermissionExplanationDialog() {
+        val dialog = PermissionDialogFragment.newInstance(PermissionDialogFragment.PERMISSION_ALL)
+        dialog.setOnPermissionActionListener { granted ->
+            if (granted) {
+                permissionHelper.requestAllRequiredPermissions { allGranted ->
+                    if (!allGranted) {
+                        showPermissionDeniedMessage("Some permissions were denied. Full functionality may not be available.")
+                    }
+                }
+            }
+        }
+        dialog.show(parentFragmentManager, "permission_dialog")
+    }
+
+    private fun showPermissionDeniedMessage(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
     }
 
     override fun onDestroyView() {
@@ -107,7 +183,7 @@ class ClockInOutFragment : Fragment() {
 // ViewModel Factory
 class ClockInOutViewModelFactory(
     private val authManager: FirebaseAuthManager,
-    private val repository: FirebaseRepository,
+    private val repository: EstateGuardRepository,
     private val locationManager: LocationManager
 ) : ViewModelProvider.Factory {
 
