@@ -7,17 +7,24 @@
     <color name="gray_900">#111827</color>
 
     <!-- Primary Colors -->
+    <color name="primary_color">#29323c</color>
     <color name="primary_dark">#29323c</color>
     <color name="primary_light">#7FFFD4</color>
     <color name="primary_accent">#1a1f26</color>
+    <color name="secondary_color">#7FFFD4</color>
+    <color name="accent_color">#1a1f26</color>
 
     <!-- Background Colors -->
+    <color name="background_color">#F8FAFC</color>
     <color name="background_dark">#111827</color>
     <color name="background_light">#F8FAFC</color>
     <color name="surface_dark">#1F2937</color>
     <color name="surface_light">#FFFFFF</color>
+    <color name="card_background">#FFFFFF</color>
 
     <!-- Text Colors -->
+    <color name="text_primary">#111827</color>
+    <color name="text_secondary">#6B7280</color>
     <color name="text_primary_dark">#F9FAFB</color>
     <color name="text_primary_light">#111827</color>
     <color name="text_secondary_dark">#D1D5DB</color>
@@ -27,6 +34,7 @@
     <color name="success">#10B981</color>
     <color name="warning">#F59E0B</color>
     <color name="error">#EF4444</color>
+    <color name="error_color">#EF4444</color>
     <color name="info">#3B82F6</color>
 
     <!-- Severity Colors -->

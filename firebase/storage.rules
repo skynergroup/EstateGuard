@@ -1,0 +1,108 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return request.auth.uid == userId;
+    }
+    
+    function isAdmin() {
+      return request.auth != null && 
+             firestore.exists(/databases/(default)/documents/users/$(request.auth.uid)) &&
+             firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+    
+    function isValidImageFile() {
+      return request.resource.contentType.matches('image/.*');
+    }
+    
+    function isValidFileSize() {
+      return request.resource.size < 10 * 1024 * 1024; // 10MB limit
+    }
+    
+    // Profile photos
+    match /profile_photos/{userId}/{fileName} {
+      // Users can upload their own profile photos, admins can upload any
+      allow create, update: if (isOwner(userId) || isAdmin()) && 
+                            isValidImageFile() && 
+                            isValidFileSize();
+      
+      // Users can read their own photos, admins can read all
+      allow read: if isOwner(userId) || isAdmin();
+      
+      // Users can delete their own photos, admins can delete any
+      allow delete: if isOwner(userId) || isAdmin();
+    }
+    
+    // Incident photos
+    match /incident_photos/{incidentId}/{fileName} {
+      // Only authenticated users can upload incident photos
+      allow create: if isAuthenticated() && 
+                    isValidImageFile() && 
+                    isValidFileSize();
+      
+      // Users can read incident photos if they have access to the incident
+      allow read: if isAuthenticated();
+      
+      // Only admins can update incident photos
+      allow update: if isAdmin();
+      
+      // Only admins can delete incident photos
+      allow delete: if isAdmin();
+    }
+    
+    // QR code images (for estate QR codes)
+    match /qr_codes/{estateId}/{fileName} {
+      // Only admins can upload QR codes
+      allow create, update: if isAdmin() && 
+                            isValidImageFile() && 
+                            isValidFileSize();
+      
+      // All authenticated users can read QR codes
+      allow read: if isAuthenticated();
+      
+      // Only admins can delete QR codes
+      allow delete: if isAdmin();
+    }
+    
+    // Report exports (PDF, Excel files)
+    match /reports/{reportId}/{fileName} {
+      // Only admins can upload reports
+      allow create, update: if isAdmin();
+      
+      // Only admins can read reports
+      allow read: if isAdmin();
+      
+      // Only admins can delete reports
+      allow delete: if isAdmin();
+    }
+    
+    // Backup files
+    match /backups/{backupId}/{fileName} {
+      // Only admins can manage backups
+      allow create, update, delete: if isAdmin();
+      
+      // Only admins can read backups
+      allow read: if isAdmin();
+    }
+    
+    // Temporary uploads (for processing)
+    match /temp/{userId}/{fileName} {
+      // Users can upload to their temp folder
+      allow create, update: if isOwner(userId) && 
+                            isValidFileSize();
+      
+      // Users can read their own temp files
+      allow read: if isOwner(userId);
+      
+      // Users can delete their own temp files
+      allow delete: if isOwner(userId);
+    }
+  }
+}

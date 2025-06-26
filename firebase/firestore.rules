@@ -1,0 +1,114 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return request.auth.uid == userId;
+    }
+    
+    function isAdmin() {
+      return isAuthenticated() && 
+             exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+    
+    function isGuardOrAdmin() {
+      return isAuthenticated() && 
+             exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['guard', 'admin'];
+    }
+    
+    // Users collection
+    match /users/{userId} {
+      // Users can read their own profile, admins can read all
+      allow read: if isOwner(userId) || isAdmin();
+      
+      // Only admins can create/update user profiles
+      allow create, update: if isAdmin();
+      
+      // Users can update their own profile (limited fields)
+      allow update: if isOwner(userId) && 
+                    onlyUpdatingFields(['lastLoginTime', 'fcmToken', 'profilePhotoUrl']);
+      
+      // No one can delete users (soft delete only)
+      allow delete: if false;
+    }
+    
+    // Time entries collection
+    match /timeEntries/{entryId} {
+      // Guards can read their own entries, admins can read all
+      allow read: if isOwner(resource.data.userId) || isAdmin();
+      
+      // Guards can create their own entries, admins can create any
+      allow create: if (isGuardOrAdmin() && isOwner(request.resource.data.userId)) || isAdmin();
+      
+      // Only admins can update time entries (for corrections)
+      allow update: if isAdmin();
+      
+      // No one can delete time entries
+      allow delete: if false;
+    }
+    
+    // Incidents collection
+    match /incidents/{incidentId} {
+      // Guards can read their own incidents, admins can read all
+      allow read: if isOwner(resource.data.userId) || isAdmin();
+      
+      // Guards can create their own incidents, admins can create any
+      allow create: if (isGuardOrAdmin() && isOwner(request.resource.data.userId)) || isAdmin();
+      
+      // Guards can update their own incidents (status changes), admins can update any
+      allow update: if (isOwner(resource.data.userId) && isGuardOrAdmin()) || isAdmin();
+      
+      // Only admins can delete incidents
+      allow delete: if isAdmin();
+    }
+    
+    // Estates collection (for multi-estate support)
+    match /estates/{estateId} {
+      // All authenticated users can read estate info
+      allow read: if isAuthenticated();
+      
+      // Only admins can create/update/delete estates
+      allow create, update, delete: if isAdmin();
+    }
+    
+    // Reports collection (for generated reports)
+    match /reports/{reportId} {
+      // Only admins can access reports
+      allow read, create, update, delete: if isAdmin();
+    }
+    
+    // System settings collection
+    match /settings/{settingId} {
+      // All authenticated users can read settings
+      allow read: if isAuthenticated();
+      
+      // Only admins can modify settings
+      allow create, update, delete: if isAdmin();
+    }
+    
+    // Audit logs collection
+    match /auditLogs/{logId} {
+      // Only admins can read audit logs
+      allow read: if isAdmin();
+      
+      // System can create audit logs (via Cloud Functions)
+      allow create: if true;
+      
+      // No one can update or delete audit logs
+      allow update, delete: if false;
+    }
+  }
+}
+
+// Helper function to check if only specific fields are being updated
+function onlyUpdatingFields(allowedFields) {
+  return request.resource.data.diff(resource.data).affectedKeys().hasOnly(allowedFields);
+}
