@@ -77,6 +77,8 @@ dependencies {
     implementation(libs.androidx.credentials.play.services.auth)
     implementation(libs.googleid)
     implementation(libs.firebase.firestore)
+    implementation(libs.firebase.messaging)
+    implementation(libs.firebase.messaging.ktx)
     kapt("androidx.room:room-compiler:2.6.1")
 
     // Permissions handling
