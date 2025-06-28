@@ -289,17 +289,115 @@
                     android:textColor="@color/text_primary"
                     android:layout_marginBottom="16dp" />
 
-                <!-- Add New User Button -->
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/button_user_management"
-                    style="@style/Widget.Material3.Button"
+                <!-- Add New Guard Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_add_guard"
+                    style="@style/EstateGuard.Card"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Register New User"
-                    android:layout_marginBottom="8dp"
-                    app:icon="@drawable/ic_profile"
-                    app:iconGravity="start"
-                    android:backgroundTint="@color/primary_color" />
+                    android:layout_marginBottom="16dp"
+                    app:cardBackgroundColor="@color/success"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="20dp"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@drawable/ic_profile"
+                            app:tint="@color/white"
+                            android:layout_marginEnd="16dp" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/button_add_guard"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Add New Security Guard"
+                                android:textSize="20sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/white" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Register a new security guard to the system"
+                                android:textSize="14sp"
+                                android:textColor="@color/white"
+                                android:alpha="0.9"
+                                android:layout_marginTop="4dp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Add New Admin Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_add_admin"
+                    style="@style/EstateGuard.Card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    app:cardBackgroundColor="@color/primary_color"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="20dp"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@drawable/ic_admin"
+                            app:tint="@color/white"
+                            android:layout_marginEnd="16dp" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/button_add_admin"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Add New Administrator"
+                                android:textSize="20sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/white" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Register a new administrator to the system"
+                                android:textSize="14sp"
+                                android:textColor="@color/white"
+                                android:alpha="0.9"
+                                android:layout_marginTop="4dp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
 
                 <!-- View Reports Button -->
                 <com.google.android.material.button.MaterialButton

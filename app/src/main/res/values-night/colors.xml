@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Dark Mode Colors -->
+    
+    <!-- Primary Colors for Dark Mode -->
+    <color name="primary_color">#7FFFD4</color>
+    <color name="primary_dark">#29323c</color>
+    <color name="primary_light">#A0FFE0</color>
+    <color name="secondary_color">#7FFFD4</color>
+    
+    <!-- Background Colors for Dark Mode -->
+    <color name="background_color">#121212</color>
+    <color name="background_dark">#000000</color>
+    <color name="background_light">#1E1E1E</color>
+    <color name="surface_dark">#1E1E1E</color>
+    <color name="surface_light">#2D2D2D</color>
+    <color name="card_background">#1E1E1E</color>
+    
+    <!-- Text Colors for Dark Mode -->
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#B0B0B0</color>
+    <color name="text_primary_dark">#FFFFFF</color>
+    <color name="text_primary_light">#FFFFFF</color>
+    <color name="text_secondary_dark">#B0B0B0</color>
+    <color name="text_secondary_light">#B0B0B0</color>
+    
+    <!-- Status Colors (same for both modes) -->
+    <color name="success">#4CAF50</color>
+    <color name="warning">#FF9800</color>
+    <color name="error">#F44336</color>
+    <color name="error_color">#F44336</color>
+    <color name="info">#2196F3</color>
+</resources>

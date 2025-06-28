@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.EditText
-import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
@@ -93,8 +91,13 @@ class AdminFragment : Fragment() {
     }
 
     private fun setupClickListeners() {
-        binding.buttonUserManagement.setOnClickListener {
-            showUserRegistrationDialog()
+        // Handle card clicks for adding users
+        binding.cardAddGuard.setOnClickListener {
+            showUserRegistrationDialog(UserRole.SECURITY_GUARD)
+        }
+
+        binding.cardAddAdmin.setOnClickListener {
+            showUserRegistrationDialog(UserRole.ADMIN)
         }
 
         binding.buttonReports.setOnClickListener {
@@ -107,14 +110,15 @@ class AdminFragment : Fragment() {
         }
     }
 
-    private fun showUserRegistrationDialog() {
+    private fun showUserRegistrationDialog(role: UserRole) {
         val dialogView = LayoutInflater.from(requireContext()).inflate(
             android.R.layout.simple_list_item_2, null
         )
 
         // Create custom dialog layout
         val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("Register New User")
+        val roleTitle = if (role == UserRole.ADMIN) "Register New Administrator" else "Register New Security Guard"
+        builder.setTitle(roleTitle)
 
         // Create input fields
         val container = android.widget.LinearLayout(requireContext())
@@ -135,23 +139,12 @@ class AdminFragment : Fragment() {
         passwordInput.inputType = android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
         container.addView(passwordInput)
 
-        val roleSpinner = Spinner(requireContext())
-        val roleAdapter = ArrayAdapter(
-            requireContext(),
-            android.R.layout.simple_spinner_item,
-            arrayOf("Security Guard", "Administrator")
-        )
-        roleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        roleSpinner.adapter = roleAdapter
-        container.addView(roleSpinner)
-
         builder.setView(container)
 
         builder.setPositiveButton("Register") { _, _ ->
             val name = nameInput.text.toString().trim()
             val email = emailInput.text.toString().trim()
             val password = passwordInput.text.toString().trim()
-            val role = if (roleSpinner.selectedItemPosition == 0) UserRole.SECURITY_GUARD else UserRole.ADMIN
 
             if (name.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()) {
                 registerNewUser(name, email, password, role)
