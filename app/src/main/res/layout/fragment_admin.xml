@@ -17,7 +17,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/admin_title"
+            android:text="Admin Dashboard"
             android:textSize="28sp"
             android:textStyle="bold"
             android:textColor="@color/primary_color"
@@ -95,7 +95,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Active Guards"
+                        android:text="Guards On Duty"
                         android:textSize="12sp"
                         android:textColor="@android:color/white"
                         android:alpha="0.8" />
@@ -185,6 +185,88 @@
 
         </LinearLayout>
 
+        <!-- Guards On Duty Section -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/EstateGuard.Card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Guards Currently On Duty"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginBottom="16dp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_guards_on_duty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false" />
+
+                <TextView
+                    android:id="@+id/text_no_guards_on_duty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="No guards currently on duty"
+                    android:textColor="@color/text_secondary"
+                    android:textAlignment="center"
+                    android:padding="16dp"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Recent Incidents Section -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/EstateGuard.Card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Recent Incidents"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginBottom="16dp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_recent_incidents"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false" />
+
+                <TextView
+                    android:id="@+id/text_no_incidents"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="No recent incidents"
+                    android:textColor="@color/text_secondary"
+                    android:textAlignment="center"
+                    android:padding="16dp"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
         <!-- Admin Actions -->
         <com.google.android.material.card.MaterialCardView
             style="@style/EstateGuard.Card"
@@ -201,53 +283,33 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Administration Tools"
+                    android:text="Quick Actions"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="@color/text_primary"
                     android:layout_marginBottom="16dp" />
 
-                <!-- User Management Button -->
+                <!-- Add New User Button -->
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_user_management"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    style="@style/Widget.Material3.Button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/admin_user_management"
+                    android:text="Register New User"
                     android:layout_marginBottom="8dp"
                     app:icon="@drawable/ic_profile"
-                    app:iconGravity="start" />
+                    app:iconGravity="start"
+                    android:backgroundTint="@color/primary_color" />
 
-                <!-- Reports Button -->
+                <!-- View Reports Button -->
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_reports"
                     style="@style/Widget.Material3.Button.OutlinedButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/admin_reports"
+                    android:text="View Reports"
                     android:layout_marginBottom="8dp"
                     app:icon="@drawable/ic_dashboard"
-                    app:iconGravity="start" />
-
-                <!-- Export Data Button -->
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/button_export_data"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/admin_export_data"
-                    android:layout_marginBottom="8dp"
-                    app:icon="@drawable/ic_notification"
-                    app:iconGravity="start" />
-
-                <!-- Settings Button -->
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/button_settings"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/admin_settings"
-                    app:icon="@drawable/ic_admin"
                     app:iconGravity="start" />
 
             </LinearLayout>

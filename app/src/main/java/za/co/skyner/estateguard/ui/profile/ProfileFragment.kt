@@ -1,5 +1,6 @@
 package za.co.skyner.estateguard.ui.profile
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import za.co.skyner.estateguard.LoginActivity
+import za.co.skyner.estateguard.auth.AuthManager
+import za.co.skyner.estateguard.auth.FirebaseAuthManager
 import za.co.skyner.estateguard.databinding.FragmentProfileBinding
 
 class ProfileFragment : Fragment() {
@@ -70,7 +74,29 @@ class ProfileFragment : Fragment() {
 
         binding.buttonLogout.setOnClickListener {
             // Handle logout
-            Toast.makeText(requireContext(), "Logout functionality will be implemented", Toast.LENGTH_SHORT).show()
+            performLogout()
+        }
+    }
+
+    private fun performLogout() {
+        try {
+            // Sign out from Firebase (this also clears local auth state)
+            val firebaseAuthManager = FirebaseAuthManager(requireContext())
+            firebaseAuthManager.signOut()
+
+            // Show logout confirmation
+            Toast.makeText(requireContext(), "Logged out successfully", Toast.LENGTH_SHORT).show()
+
+            // Navigate to login activity
+            val intent = Intent(requireContext(), LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+
+            // Finish the current activity
+            requireActivity().finish()
+
+        } catch (e: Exception) {
+            Toast.makeText(requireContext(), "Error during logout: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
 

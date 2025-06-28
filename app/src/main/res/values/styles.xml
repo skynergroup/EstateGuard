@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Gold Switch Theme -->
+    <style name="GoldSwitchTheme" parent="Theme.MaterialComponents">
+        <item name="colorAccent">#FFD700</item>
+        <item name="colorControlActivated">#FFD700</item>
+        <item name="colorSwitchThumbNormal">#B0BEC5</item>
+        <item name="android:colorForeground">#FFD700</item>
+    </style>
+</resources>

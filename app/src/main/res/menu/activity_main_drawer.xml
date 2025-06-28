@@ -19,23 +19,19 @@
             android:title="@string/menu_incident_log" />
     </group>
 
-    <!-- Administration -->
+    <!-- Administration (Admin only) -->
     <item android:title="@string/menu_section_administration">
         <menu>
             <item
                 android:id="@+id/nav_admin"
                 android:icon="@drawable/ic_admin"
-                android:title="@string/menu_admin" />
+                android:title="Admin Dashboard" />
         </menu>
     </item>
 
     <!-- Account Management -->
     <item android:title="@string/menu_section_account">
         <menu>
-            <item
-                android:id="@+id/nav_profile"
-                android:icon="@drawable/ic_profile"
-                android:title="@string/menu_profile" />
             <item
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/ic_logout"

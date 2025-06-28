@@ -16,50 +16,40 @@ class AuthManager(context: Context) {
         private const val KEY_USER_NAME = "user_name"
         private const val KEY_USER_ROLE = "user_role"
         private const val KEY_IS_LOGGED_IN = "is_logged_in"
+        private const val KEY_LOGOUT_REQUESTED = "logout_requested"
         
-        // Mock users for testing
-        private val MOCK_USERS = listOf(
-            User(
-                id = "admin_001",
-                email = "admin@estateguard.com",
-                name = "John Smith",
-                role = UserRole.ADMIN
-            ),
-            User(
-                id = "guard_001",
-                email = "guard@estateguard.com",
-                name = "Michael Johnson",
-                role = UserRole.SECURITY_GUARD
-            )
-        )
+
     }
     
-    fun login(email: String, password: String): AuthResult {
-        // Mock authentication - in real app, this would call backend API
-        val user = MOCK_USERS.find { it.email == email }
-        
-        return if (user != null && password == "password123") {
-            // Save user session
-            prefs.edit().apply {
-                putString(KEY_USER_ID, user.id)
-                putString(KEY_USER_EMAIL, user.email)
-                putString(KEY_USER_NAME, user.name)
-                putString(KEY_USER_ROLE, user.role.name)
-                putBoolean(KEY_IS_LOGGED_IN, true)
-                apply()
-            }
-            AuthResult.Success(user)
-        } else {
-            AuthResult.Error("Invalid email or password")
+    fun saveUserSession(user: User) {
+        prefs.edit().apply {
+            putString(KEY_USER_ID, user.id)
+            putString(KEY_USER_EMAIL, user.email)
+            putString(KEY_USER_NAME, user.name)
+            putString(KEY_USER_ROLE, user.role.name)
+            putBoolean(KEY_IS_LOGGED_IN, true)
+            apply()
         }
     }
     
     fun logout() {
-        prefs.edit().clear().apply()
+        prefs.edit().apply {
+            clear()
+            putBoolean(KEY_LOGOUT_REQUESTED, true)
+            apply()
+        }
     }
     
     fun isLoggedIn(): Boolean {
         return prefs.getBoolean(KEY_IS_LOGGED_IN, false)
+    }
+
+    fun wasLogoutRequested(): Boolean {
+        return prefs.getBoolean(KEY_LOGOUT_REQUESTED, false)
+    }
+
+    fun clearLogoutRequest() {
+        prefs.edit().putBoolean(KEY_LOGOUT_REQUESTED, false).apply()
     }
     
     fun getCurrentUser(): User? {
@@ -86,29 +76,7 @@ class AuthManager(context: Context) {
         return prefs.getString(KEY_USER_ID, null)
     }
 
-    // Method for testing - simulate login with mock users
-    fun simulateLogin(userType: String = "guard"): AuthResult {
-        val user = if (userType == "admin") {
-            MOCK_USERS.find { it.role == UserRole.ADMIN }
-        } else {
-            MOCK_USERS.find { it.role == UserRole.SECURITY_GUARD }
-        }
 
-        return if (user != null) {
-            // Save user session
-            prefs.edit().apply {
-                putString(KEY_USER_ID, user.id)
-                putString(KEY_USER_EMAIL, user.email)
-                putString(KEY_USER_NAME, user.name)
-                putString(KEY_USER_ROLE, user.role.name)
-                putBoolean(KEY_IS_LOGGED_IN, true)
-                apply()
-            }
-            AuthResult.Success(user)
-        } else {
-            AuthResult.Error("User not found")
-        }
-    }
 }
 
 sealed class AuthResult {

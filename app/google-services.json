@@ -1,36 +1,26 @@
 {
   "project_info": {
-    "project_number": "123456789012",
-    "project_id": "estateguard-demo",
-    "storage_bucket": "estateguard-demo.appspot.com"
+    "project_number": "828078763857",
+    "project_id": "estateguard-3b317",
+    "storage_bucket": "estateguard-3b317.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:123456789012:android:abcdef1234567890",
+        "mobilesdk_app_id": "1:828078763857:android:58e503129a313f94cf2d70",
         "android_client_info": {
           "package_name": "za.co.skyner.estateguard"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "123456789012-abcdefghijklmnopqrstuvwxyz123456.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDemoKeyForEstateGuardApp123456789"
+          "current_key": "AIzaSyBob_Enhr3FXHV3UlboG1ThgpsxQKJ8xP8"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "123456789012-abcdefghijklmnopqrstuvwxyz123456.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

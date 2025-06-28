@@ -31,10 +31,5 @@
         android:label="@string/menu_admin"
         tools:layout="@layout/fragment_admin" />
 
-    <!-- Account Management -->
-    <fragment
-        android:id="@+id/nav_profile"
-        android:name="za.co.skyner.estateguard.ui.profile.ProfileFragment"
-        android:label="@string/menu_profile"
-        tools:layout="@layout/fragment_profile" />
+
 </navigation>
